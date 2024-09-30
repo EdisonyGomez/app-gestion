@@ -1,17 +1,16 @@
 import { Injectable } from "@angular/core";
-import { TaskRepository } from "../repositories/task-repository";
 import { Task } from "../models/task";
-import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class GetTaskUseCase{
+    tasks: Task[] = [];
 
-    constructor(private taskRepository: TaskRepository){}
+    constructor(){}
 
-    execute(): Observable<[Task]>{
-        return this.taskRepository.getTask();
-    }
+    filterTasks(completed: boolean): Task[] {
+        return this.tasks.filter(task => task.completed === completed);
+      }
 }

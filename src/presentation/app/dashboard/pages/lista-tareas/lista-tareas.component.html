@@ -1,0 +1,40 @@
+
+  
+  <h1 class="text-3xl  text-slate-900 font-bold text-center">Lista de tareas</h1>
+    <div  *ngFor="let task of tasks$ | async" 
+        class="container w-auto m-6 rounded-md
+                p-1 bg-blue-50 shadow-cyan-400 shadow-sm">
+    <strong>{{ task.title }}</strong>
+    <span *ngIf="task.completed">(Completada)</span>
+  
+    <h4>Personas Asociadas:</h4>
+    <ul *ngFor="let person of task.people">
+      {{ person.fullName }} (Edad: {{ person.age }})
+      <span class="flex flex-row">
+        <h5>Habilidades:</h5>  
+        <ul class="flex flex-row gap-3">
+          <li  *ngFor="let skill of person.skills">{{ skill }} </li>        
+        </ul>      
+      </span>
+      
+    </ul>
+  
+    <aside class="flex gap-3">
+      <button 
+              type="button " 
+              class="bg-green-500
+                     text-white  
+                      rounded-md px-2 py-1 "   
+            (click)="completeTask(task.id)">Marcar como completada</button>
+
+      <button 
+              type="button" 
+              class="bg-red-500
+                     text-white  
+                       rounded-md px-2 py-1" 
+              (click)="deleteTask(task.id)">Eliminar </button>
+ 
+    </aside>
+    
+  </div>
+

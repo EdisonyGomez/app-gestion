@@ -1,0 +1,14 @@
+@media screen and ( width < 500px) {
+   .contenido{
+    flex-direction: column-reverse;
+    width: 100vw;
+   }
+
+   .lista-tareas{
+    width: 100%;
+   }
+
+   .formulario{
+    width: 100%;
+   }
+}

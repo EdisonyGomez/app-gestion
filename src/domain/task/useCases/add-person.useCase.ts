@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { TaskRepository } from "../repositories/task-repository";
 import { Person } from "src/domain/person/models/person";
+import { Task } from "../models/task";
 
 @Injectable({
     providedIn: 'root'
@@ -8,9 +8,13 @@ import { Person } from "src/domain/person/models/person";
 
 export class AddPersonUseCase{
 
-    constructor(private taskRepository: TaskRepository){}
+    tasks: Task[] = [];
 
-    execute(taskId: number, person: Person):void{
-        return this.taskRepository.addPersonToTask(taskId, person);
-    }
+
+    addPersonToTask(taskId: number, person: Person): void {
+        const task = this.tasks.find(t => t.id === taskId);
+        if (task) {
+          task.people.push(person);
+        }
+      }
 }

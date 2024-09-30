@@ -1,0 +1,75 @@
+<div class="container h-max w-auto shadow-slate-600 rounded-lg shadow-md">
+
+<form [formGroup]="taskForm" (ngSubmit)="submit()">
+  <h1 class="text-3xl text-slate-900 font-bold text-center">Crear nueva tarea </h1>
+  <div>
+    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre de la tarea:</label>
+    <input id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  placeholder="tarea 1" type="text" formControlName="title">
+  </div>
+
+
+  <div formArrayName="people"><!--  -->
+
+    <aside class="flex flex-row gap-4 w-full">
+      <h3 class="font-bold">Personas</h3>
+      <button class="bg-green-500 
+                    text-white  
+                      rounded-md px-2 py-1 "  
+                      type="button" (click)="addPerson()">Agregar Persona</button>
+      
+      
+    </aside>
+    
+
+    <div class="border border-blue-100 mt-4" 
+      *ngFor="let person of people.controls; let i=index" [formGroupName]="i">
+      <aside class="flex flex-row gap-60">
+        <h4 class="font-bold">Persona {{i + 1}}</h4> 
+        <button  class="bg-red-500
+                        text-white  
+                          rounded-md px-2 py-1" 
+                type="button" (click)="removePerson(i)">Remover Persona</button>
+      </aside>
+      
+     <div>
+        <label for="fullName{{i}}" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre completo:</label>
+        <input type="text" id="fullName{{i}}" formControlName="fullName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="ingrese el nombre de la persona" required />
+     </div>
+     <div>
+      <label for="age{{i}}" class="block mb-2 text-sm font-medium text-gray-900 ">Edad:</label>
+      <input type="number" id="age{{i}}" formControlName="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="ingrese la edad de la persona" required />
+    </div>
+
+      
+      <div formArrayName="skills" class="p-4">
+        <aside class="flex flex-row gap-4">
+          <h5 class="font-bold">Habilidades</h5>
+          <button  
+                  class="bg-green-500
+                         text-white  
+                          rounded-md px-2 py-1 " 
+                  (click)="addSkill(i)">Agregar habildad</button>
+        </aside>
+       
+        <!-- Cast to FormArray to access controls -->
+        <div *ngFor="let skill of getSkills(i).controls; let j=index">
+          <input class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" [formControlName]="j">
+
+          <aside class="flex flex-row gap-4 mt-2">
+            <button  class="bg-red-500
+                          text-white  
+                            rounded-md px-2 py-1" 
+                     type="button" (click)="removeSkill(i, j)">Remover habildad</button>
+           
+          </aside>
+          
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+
+  <button type="submit" class="boton-enviar m-4 rounded-md" [disabled]="!taskForm.valid">Crear tarea</button>
+</form>
+</div>
